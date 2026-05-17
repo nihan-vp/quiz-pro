@@ -1,0 +1,108 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  ADMIN
+  CREATOR
+  STUDENT
+}
+
+enum QuestionType {
+  SHORT_ANSWER
+  PARAGRAPH
+  MCQ
+  CHECKBOX
+  DROPDOWN
+  FILE_UPLOAD
+  RATING
+  DATE
+  TIME
+  SECTION_BREAK
+}
+
+model User {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  email         String    @unique
+  password      String
+  name          String?
+  role          Role      @default(STUDENT)
+  organization  String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  forms         Form[]
+  attempts      Attempt[]
+}
+
+model Form {
+  id              String     @id @default(auto()) @map("_id") @db.ObjectId
+  title           String
+  description     String?
+  creatorId       String     @db.ObjectId
+  creator         User       @relation(fields: [creatorId], references: [id])
+  isQuiz          Boolean    @default(false)
+  settings        String?    // JSON: timer, startDate, endDate, etc.
+  quizSettings    String?    // JSON: marks, negativeMarking, etc.
+  questions       Question[]
+  attempts        Attempt[]
+  isPublished     Boolean    @default(false)
+  shareLink       String?    @unique
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+}
+
+model Question {
+  id              String       @id @default(auto()) @map("_id") @db.ObjectId
+  formId          String       @db.ObjectId
+  form            Form         @relation(fields: [formId], references: [id], onDelete: Cascade)
+  type            QuestionType
+  text            String
+  description     String?
+  options         String?      // JSON array of options
+  correctAnswer   String?      // For quizzes
+  marks           Int          @default(0)
+  negativeMarks   Int          @default(0)
+  explanation     String?
+  order           Int          @default(0)
+  isRequired      Boolean      @default(false)
+}
+
+model Attempt {
+  id              String      @id @default(auto()) @map("_id") @db.ObjectId
+  formId          String      @db.ObjectId
+  form            Form        @relation(fields: [formId], references: [id])
+  userId          String?     @db.ObjectId
+  user            User?       @relation(fields: [userId], references: [id])
+  guestName       String?
+  guestEmail      String?
+  startedAt       DateTime    @default(now())
+  completedAt     DateTime?
+  score           Float?
+  status          String      @default("IN_PROGRESS") // IN_PROGRESS, COMPLETED, AUTO_SUBMITTED
+  responses       Response[]
+  violations      Violation[]
+}
+
+model Response {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  attemptId       String   @db.ObjectId
+  attempt         Attempt  @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  questionId      String
+  answer          String   // Answer as string/JSON
+  isCorrect       Boolean?
+  marksObtained   Float?
+}
+
+model Violation {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  attemptId       String   @db.ObjectId
+  attempt         Attempt  @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  type            String   // tab-switch, window-blur, fullscreen-exit, copy-paste
+  count           Int      @default(1)
+  timestamp       DateTime @default(now())
+}

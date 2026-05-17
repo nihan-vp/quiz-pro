@@ -1,0 +1,6 @@
+{
+  "name": "QuizForm Pro",
+  "description": "Production-ready quiz and exam platform with anti-cheat system, real-time monitoring, and advanced analytics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
