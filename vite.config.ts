@@ -28,6 +28,7 @@ export default defineConfig(({mode}) => {
         'localhost',
         '127.0.0.1',
         'quiz-pro-902a.onrender.com',
+        'quizpro.dev',
       ],
     },
   };
