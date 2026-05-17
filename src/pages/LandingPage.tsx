@@ -13,10 +13,11 @@ export default function LandingPage() {
 
   const handleJoinByCode = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!joinCode) return;
+    const normalizedCode = joinCode.trim().toUpperCase();
+    if (!normalizedCode) return;
     setIsJoining(true);
     try {
-      const res = await api.get(`/forms/code/${joinCode}`);
+      const res = await api.get(`/forms/code/${normalizedCode}`);
       navigate(`/quiz/${res.data.id}`);
     } catch (error: any) {
       toast.error(error.response?.data?.message || 'Invalid quiz code');
@@ -112,7 +113,8 @@ export default function LandingPage() {
                     className="flex-1 bg-transparent border-none focus:ring-0 text-sm font-bold uppercase tracking-widest h-11"
                   />
                   <Button 
-                    disabled={isJoining}
+                    type="submit"
+                    disabled={isJoining || !joinCode.trim()}
                     className="rounded-full h-11 px-6 font-black uppercase text-[10px] tracking-widest shadow-lg shadow-primary/20"
                   >
                     {isJoining ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Join Quiz'}

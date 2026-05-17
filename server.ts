@@ -317,9 +317,9 @@ async function startServer() {
     res.json(form);
   });
 
-  app.get("/api/forms/code/:code", authenticate as any, async (req: AuthRequest, res) => {
+  app.get("/api/forms/code/:code", optionalAuthenticate as any, async (req: AuthRequest, res) => {
     const form = await prisma.form.findUnique({
-      where: { shareLink: req.params.code.toUpperCase() },
+      where: { shareLink: req.params.code.trim().toUpperCase() },
       select: { id: true, isPublished: true }
     });
     if (!form) return res.status(404).json({ message: "Invalid quiz code" });
