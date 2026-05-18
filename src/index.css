@@ -121,10 +121,24 @@
   * {
     @apply border-border outline-ring/50;
     }
+  html,
+  body,
+  #root {
+    width: 100%;
+    min-height: 100%;
+    }
   body {
     @apply bg-background text-foreground;
+    overflow-x: hidden;
     }
   html {
     @apply font-sans;
+    }
+  img,
+  video,
+  canvas,
+  svg {
+    max-width: 100%;
+    height: auto;
     }
 }

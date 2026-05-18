@@ -42,10 +42,10 @@ export default function Settings() {
 
   return (
     <DashboardLayout>
-      <div className="max-w-4xl mx-auto space-y-10 pb-20">
+      <div className="max-w-4xl mx-auto space-y-8 sm:space-y-10 pb-16 sm:pb-20">
         {/* Header */}
         <div>
-          <h1 className="text-4xl font-black tracking-tight uppercase">Settings</h1>
+          <h1 className="text-2xl sm:text-4xl font-black tracking-tight uppercase">Settings</h1>
           <p className="text-muted-foreground font-medium mt-1">Manage your account preferences and profile details</p>
         </div>
 
@@ -75,8 +75,8 @@ export default function Settings() {
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-8">
             {/* Profile Section */}
-            <Card className="border-none shadow-xl shadow-primary/5 rounded-[2.5rem] overflow-hidden">
-              <CardHeader className="bg-muted/10 p-8 border-b">
+            <Card className="border-none shadow-xl shadow-primary/5 rounded-[1.5rem] sm:rounded-[2.5rem] overflow-hidden">
+              <CardHeader className="bg-muted/10 p-5 sm:p-8 border-b">
                 <div className="flex items-center gap-4">
                   <div className="h-14 w-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center font-black text-xl shadow-inner border-2 border-primary/10">
                     {user?.name?.[0].toUpperCase()}
@@ -87,7 +87,7 @@ export default function Settings() {
                   </div>
                 </div>
               </CardHeader>
-              <CardContent className="p-8">
+              <CardContent className="p-5 sm:p-8">
                 <form onSubmit={handleProfileUpdate} className="space-y-6">
                   <div className="space-y-2">
                     <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-1">Full Name</Label>
@@ -126,7 +126,7 @@ export default function Settings() {
             </Card>
 
             {/* Account Status */}
-            <div className="p-8 rounded-[2.5rem] bg-muted/30 border-2 border-dashed flex items-center justify-between gap-6 group hover:border-primary/20 transition-all">
+            <div className="p-5 sm:p-8 rounded-[1.5rem] sm:rounded-[2.5rem] bg-muted/30 border-2 border-dashed flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 group hover:border-primary/20 transition-all">
               <div className="flex items-center gap-4">
                 <div className="h-12 w-12 rounded-2xl bg-green-100 text-green-600 flex items-center justify-center shadow-sm">
                   <CheckCircle2 className="h-6 w-6" />

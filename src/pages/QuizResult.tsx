@@ -96,24 +96,24 @@ export default function QuizResult() {
 
   return (
     <DashboardLayout>
-      <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-20">
+      <div className="max-w-4xl mx-auto space-y-6 sm:space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-16 sm:pb-20">
         <div className="text-center space-y-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest border border-primary/20">
             <Trophy className="h-3 w-3" /> Assessment Result
           </div>
-          <h1 className="text-4xl font-extrabold tracking-tight">{result.form.title}</h1>
+          <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight break-words">{result.form.title}</h1>
           <p className="text-muted-foreground">Released on {format(new Date(result.completedAt), 'MMMM d, yyyy')}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
           {/* Main Verdict Card */}
-          <Card className="w-full border-none shadow-2xl shadow-primary/5 rounded-[2.5rem] overflow-hidden text-center p-12 space-y-4 border-2 bg-muted/5">
+          <Card className="w-full border-none shadow-2xl shadow-primary/5 rounded-[1.5rem] sm:rounded-[2.5rem] overflow-hidden text-center p-6 sm:p-12 space-y-4 border-2 bg-muted/5">
             <div className={`mx-auto h-28 w-28 rounded-[2rem] flex items-center justify-center mb-6 rotate-3 group-hover:rotate-0 transition-all duration-500 scale-110 ${isPass ? 'bg-green-100 text-green-600 shadow-[0_20px_40px_rgba(34,197,94,0.2)]' : 'bg-red-100 text-red-600 shadow-[0_20px_40px_rgba(239,44,44,0.2)]'}`}>
               {isPass ? <CheckCircle2 className="h-14 w-14" /> : <XCircle className="h-14 w-14" />}
             </div>
             <div className="space-y-1">
               <h3 className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.3em]">Evaluation Outcome</h3>
-              <p className={`text-6xl font-black uppercase tracking-tighter ${isPass ? 'text-green-600' : 'text-red-600'}`}>
+              <p className={`text-5xl sm:text-6xl font-black uppercase tracking-tighter ${isPass ? 'text-green-600' : 'text-red-600'}`}>
                 {isPass ? 'Pass' : 'Fail'}
               </p>
             </div>
@@ -126,7 +126,7 @@ export default function QuizResult() {
 
           {/* Metrics Card */}
           <div className="space-y-4">
-            <Card className="border-none shadow-xl shadow-primary/5 rounded-[2rem] p-8 bg-background border-2 overflow-hidden relative">
+            <Card className="border-none shadow-xl shadow-primary/5 rounded-[1.5rem] sm:rounded-[2rem] p-5 sm:p-8 bg-background border-2 overflow-hidden relative">
               <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
                 <Target className="h-32 w-32" />
               </div>

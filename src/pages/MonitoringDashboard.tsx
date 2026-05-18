@@ -82,9 +82,9 @@ export default function MonitoringDashboard() {
 
   return (
     <DashboardLayout>
-      <div className="space-y-8 max-w-7xl mx-auto pb-20">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
+      <div className="space-y-6 sm:space-y-8 max-w-7xl mx-auto pb-16 sm:pb-20">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3 sm:gap-4 min-w-0">
             <Link to="/dashboard">
               <Button variant="ghost" size="icon" className="rounded-full">
                 <ArrowLeft className="h-5 w-5" />
@@ -95,10 +95,10 @@ export default function MonitoringDashboard() {
                 <div className="h-2 w-2 bg-red-500 rounded-full animate-pulse" />
                 <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Live Monitoring</span>
               </div>
-              <h1 className="text-3xl font-bold tracking-tight">{quiz?.title}</h1>
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight break-words">{quiz?.title}</h1>
             </div>
           </div>
-          <div className="flex items-center gap-2 px-4 py-2 bg-secondary/30 rounded-xl border border-border">
+          <div className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-secondary/30 rounded-xl border border-border self-start sm:self-auto">
             <Users className="h-4 w-4 text-primary" />
             <span className="font-bold">{activeAttempts.length} Active Participants</span>
           </div>
@@ -107,14 +107,14 @@ export default function MonitoringDashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Active Participants Table */}
           <div className="lg:col-span-2 space-y-6">
-            <Card className="border-none shadow-xl shadow-primary/5 rounded-2xl overflow-hidden">
+              <Card className="border-none shadow-xl shadow-primary/5 rounded-2xl overflow-hidden">
               <CardHeader className="bg-primary/5 border-b border-primary/10">
                 <CardTitle className="flex items-center gap-2">
                   <Monitor className="h-5 w-5 text-primary" /> Participant Status
                 </CardTitle>
                 <CardDescription>Real-time view of all candidates currently taking the exam.</CardDescription>
               </CardHeader>
-              <CardContent className="p-0">
+              <CardContent className="p-0 overflow-x-auto">
                 <Table>
                   <TableHeader className="bg-secondary/20">
                     <TableRow>
@@ -180,7 +180,7 @@ export default function MonitoringDashboard() {
 
           {/* Real-time Violation Feed */}
           <div className="space-y-6">
-            <Card className="border-none shadow-xl shadow-primary/5 rounded-2xl overflow-hidden h-[600px] flex flex-col">
+            <Card className="border-none shadow-xl shadow-primary/5 rounded-2xl overflow-hidden h-[420px] sm:h-[600px] flex flex-col">
               <CardHeader className="bg-red-500/5 border-b border-red-500/10">
                 <CardTitle className="flex items-center gap-2 text-red-600">
                   <ShieldAlert className="h-5 w-5" /> Live Violation Feed

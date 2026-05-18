@@ -158,7 +158,7 @@ export default function QuizReports() {
 
   return (
     <DashboardLayout>
-      <div className="space-y-8 max-w-7xl mx-auto pb-12">
+      <div className="space-y-6 sm:space-y-8 max-w-7xl mx-auto pb-12">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="space-y-1">
@@ -171,10 +171,10 @@ export default function QuizReports() {
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to Dashboard
             </Button>
-            <h1 className="text-3xl font-bold tracking-tight uppercase truncate max-w-md">{data.title} — Reports</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight uppercase break-words">{data.title} — Reports</h1>
             <p className="text-muted-foreground font-medium">Detailed usage analytics and student performance</p>
           </div>
-          <div className="flex items-center gap-3">
+           <div className="flex items-center gap-3 self-start md:self-auto">
              <Button variant="outline" className="h-11 rounded-xl font-bold border-2" onClick={handleExport}>
               <Download className="h-4 w-4 mr-2" />
               Export CSV
@@ -336,17 +336,17 @@ export default function QuizReports() {
 
       {/* Attempt Details Modal */}
       {selectedAttempt && (
-        <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 md:p-6">
-          <div className="bg-background border-2 border-border shadow-2xl rounded-3xl w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col animate-in fade-in zoom-in duration-300">
+        <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-3 sm:p-4 md:p-6">
+          <div className="bg-background border-2 border-border shadow-2xl rounded-2xl sm:rounded-3xl w-full max-w-4xl max-h-[92vh] overflow-hidden flex flex-col animate-in fade-in zoom-in duration-300">
             {/* Modal Header */}
-            <div className="p-6 border-b flex items-center justify-between bg-muted/20">
-              <div className="flex items-center gap-4">
+            <div className="p-4 sm:p-6 border-b flex items-start sm:items-center justify-between gap-3 bg-muted/20">
+              <div className="flex items-start sm:items-center gap-3 sm:gap-4 min-w-0">
                 <div className="h-14 w-14 rounded-2xl bg-primary text-white flex items-center justify-center font-black text-lg shadow-lg">
                   {(selectedAttempt.user?.name || '??').split(' ').map((n: string) => n[0]).join('')}
                 </div>
                 <div>
-                  <h2 className="text-2xl font-black tracking-tight uppercase leading-tight">{selectedAttempt.user?.name}</h2>
-                  <p className="text-muted-foreground font-bold text-sm flex items-center gap-2">
+                  <h2 className="text-lg sm:text-2xl font-black tracking-tight uppercase leading-tight break-words">{selectedAttempt.user?.name}</h2>
+                  <p className="text-muted-foreground font-bold text-xs sm:text-sm flex flex-wrap items-center gap-2">
                     <User className="h-3.5 w-3.5" /> {selectedAttempt.user?.email} • 
                     <History className="h-3.5 w-3.5 ml-1" /> {format(new Date(selectedAttempt.completedAt), 'PPP')}
                   </p>
@@ -358,27 +358,27 @@ export default function QuizReports() {
             </div>
 
             {/* Modal Content */}
-            <div className="flex-1 overflow-y-auto p-8 space-y-8">
+            <div className="flex-1 overflow-y-auto p-4 sm:p-8 space-y-6 sm:space-y-8">
               {/* Quick Summary Row */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="p-6 border-2 rounded-2xl bg-muted/10 space-y-2">
                   <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">
                     {selectedAttempt.status === 'REVIEWED' ? 'Final Score' : 'Projected Score'}
                   </p>
-                  <p className={`text-4xl font-black ${ (selectedAttempt.status === 'REVIEWED' ? selectedAttempt.score : calculateScore(editedResponses)) >= passMark ? 'text-green-600' : 'text-red-600'}`}>
+                  <p className={`text-3xl sm:text-4xl font-black ${ (selectedAttempt.status === 'REVIEWED' ? selectedAttempt.score : calculateScore(editedResponses)) >= passMark ? 'text-green-600' : 'text-red-600'}`}>
                     {selectedAttempt.status === 'REVIEWED' ? selectedAttempt.score : calculateScore(editedResponses)}%
                   </p>
                 </div>
                 <div className="p-6 border-2 rounded-2xl bg-muted/10 space-y-2">
                   <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">Correct / Total</p>
-                  <p className="text-4xl font-black">{editedResponses.filter(r => r.isCorrect).length} / {data.questions?.length}</p>
+                  <p className="text-3xl sm:text-4xl font-black">{editedResponses.filter(r => r.isCorrect).length} / {data.questions?.length}</p>
                   <p className="text-[10px] font-bold text-muted-foreground">
                     Raw Points: {editedResponses.reduce((acc: number, r: any) => acc + (r.marksObtained || 0), 0)} / {totalPossibleMarks}
                   </p>
                 </div>
                 <div className="p-6 border-2 rounded-2xl bg-muted/10 space-y-2">
                   <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">Violations</p>
-                  <p className={`text-4xl font-black ${selectedAttempt.violations?.length > 0 ? 'text-red-600' : 'text-green-600'}`}>
+                  <p className={`text-3xl sm:text-4xl font-black ${selectedAttempt.violations?.length > 0 ? 'text-red-600' : 'text-green-600'}`}>
                     {selectedAttempt.violations?.length || 0}
                   </p>
                 </div>
@@ -431,7 +431,7 @@ export default function QuizReports() {
                     };
 
                     return (
-                      <div key={question.id} className="p-6 border-2 rounded-2xl hover:border-primary/20 transition-all group">
+                      <div key={question.id} className="p-4 sm:p-6 border-2 rounded-2xl hover:border-primary/20 transition-all group">
                         <div className="flex items-start justify-between gap-4">
                           <div className="space-y-2 flex-1">
                             <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest flex items-center gap-2">
@@ -467,7 +467,7 @@ export default function QuizReports() {
                           </div>
                         </div>
 
-                        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="mt-4 sm:mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                           <div className="space-y-2">
                             <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">Student's Answer</p>
                             <div className={`p-4 rounded-xl font-bold border-2 ${response?.isCorrect ? 'bg-green-50/30 border-green-100' : 'bg-red-50/30 border-red-100'}`}>
@@ -489,19 +489,19 @@ export default function QuizReports() {
             </div>
 
             {/* Modal Footer */}
-            <div className="p-6 border-t bg-muted/20 flex justify-between items-center">
+            <div className="p-4 sm:p-6 border-t bg-muted/20 flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3">
               <div>
                 {selectedAttempt.status !== 'REVIEWED' && (
                   <Button 
                     variant="outline" 
-                    className="h-12 px-8 rounded-2xl font-black text-xs uppercase tracking-widest border-primary/30 text-primary hover:bg-primary hover:text-white transition-all"
+                    className="h-11 sm:h-12 px-4 sm:px-8 rounded-2xl font-black text-[10px] sm:text-xs uppercase tracking-widest border-primary/30 text-primary hover:bg-primary hover:text-white transition-all w-full sm:w-auto"
                     onClick={() => handleRelease(selectedAttempt.id)}
                   >
                     Approve & Release Result
                   </Button>
                 )}
               </div>
-              <Button onClick={() => setSelectedAttempt(null)} className="h-12 px-8 rounded-2xl font-black text-xs uppercase tracking-widest shadow-lg">
+              <Button onClick={() => setSelectedAttempt(null)} className="h-11 sm:h-12 px-4 sm:px-8 rounded-2xl font-black text-[10px] sm:text-xs uppercase tracking-widest shadow-lg w-full sm:w-auto">
                 Close Reports
               </Button>
             </div>

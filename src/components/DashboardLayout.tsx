@@ -32,7 +32,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   ].filter(item => !item.roles || (user && item.roles.includes(user.role)));
 
   const Sidebar = ({ className }: { className?: string }) => (
-    <div className={`flex flex-col h-full bg-card border-r border-border min-w-[240px] ${className}`}>
+    <div className={`flex h-full w-full max-w-[280px] flex-col bg-card border-r border-border lg:min-w-[240px] ${className}`}>
       <div className="flex-1 py-6 px-3 space-y-1">
         {navItems.map((item) => {
           const Icon = item.icon;
@@ -90,9 +90,9 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   );
 
   return (
-    <div className="flex flex-col h-screen bg-background overflow-hidden">
+    <div className="flex min-h-dvh flex-col bg-background overflow-hidden">
       {/* Top Navigation Bar */}
-      <header className="h-16 flex items-center px-6 border-b border-border bg-card sticky top-0 z-50 shrink-0">
+      <header className="h-16 flex items-center px-3 sm:px-4 md:px-6 border-b border-border bg-card sticky top-0 z-50 shrink-0">
         <div className="flex items-center lg:hidden">
           <Sheet>
             <SheetTrigger render={
@@ -100,18 +100,18 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                 <Menu className="h-5 w-5" />
               </Button>
             } />
-            <SheetContent side="left" className="p-0 w-[280px]">
+            <SheetContent side="left" className="p-0 w-[90vw] max-w-[280px]">
               <Sidebar />
             </SheetContent>
           </Sheet>
         </div>
         
-        <div className="flex items-center gap-2 font-bold text-xl tracking-tight">
-          <Link to="/" className="flex items-center gap-2">
+        <div className="flex items-center gap-2 font-bold text-lg sm:text-xl tracking-tight min-w-0">
+          <Link to="/" className="flex items-center gap-2 min-w-0">
             <div className="p-1.5 bg-primary rounded-lg text-primary-foreground">
               <ClipboardList className="h-5 w-5" />
             </div>
-            <span>QuizForm Pro</span>
+            <span className="truncate">QuizForm Pro</span>
           </Link>
         </div>
 
@@ -143,7 +143,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         </div>
   
         {/* Main Content Area */}
-        <main className="flex-1 overflow-y-auto p-4 md:p-8 lg:p-10 scroll-smooth">
+        <main className="flex-1 overflow-y-auto p-3 sm:p-4 md:p-8 lg:p-10 scroll-smooth">
           {children}
         </main>
       </div>

@@ -216,21 +216,21 @@ export default function QuizPlayer() {
 
   if (requiresGuestInfo) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-muted/30 p-6">
+      <div className="min-h-screen flex items-start sm:items-center justify-center bg-muted/30 p-4 sm:p-6 py-8 sm:py-6">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="w-full max-w-md"
         >
-          <Card className="border-none shadow-2xl rounded-[2.5rem] overflow-hidden">
-            <CardHeader className="p-10 pb-6 text-center">
+          <Card className="border-none shadow-2xl rounded-[1.5rem] sm:rounded-[2.5rem] overflow-hidden">
+            <CardHeader className="p-6 sm:p-10 pb-4 sm:pb-6 text-center">
               <div className="h-16 w-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
                 <Send className="h-8 w-8 text-primary" />
               </div>
-              <CardTitle className="text-3xl font-black uppercase tracking-tight">Welcome!</CardTitle>
+              <CardTitle className="text-2xl sm:text-3xl font-black uppercase tracking-tight">Welcome!</CardTitle>
               <p className="text-muted-foreground mt-2 font-medium">Please enter your details to start the quiz</p>
             </CardHeader>
-            <CardContent className="p-10 pt-4">
+            <CardContent className="p-6 sm:p-10 pt-3 sm:pt-4">
               <form onSubmit={handleStartGuest} className="space-y-6">
                 <div className="space-y-2">
                   <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-1">Full Name</Label>
@@ -239,7 +239,7 @@ export default function QuizPlayer() {
                     value={guestInfo.name}
                     onChange={(e) => setGuestInfo({ ...guestInfo, name: e.target.value })}
                     placeholder="John Doe"
-                    className="h-14 rounded-2xl bg-muted/50 border-2 focus-visible:ring-primary/20 text-lg"
+                    className="h-12 sm:h-14 rounded-2xl bg-muted/50 border-2 focus-visible:ring-primary/20 text-base sm:text-lg"
                   />
                 </div>
                 <div className="space-y-2">
@@ -250,12 +250,12 @@ export default function QuizPlayer() {
                     value={guestInfo.email}
                     onChange={(e) => setGuestInfo({ ...guestInfo, email: e.target.value })}
                     placeholder="john@example.com"
-                    className="h-14 rounded-2xl bg-muted/50 border-2 focus-visible:ring-primary/20 text-lg"
+                    className="h-12 sm:h-14 rounded-2xl bg-muted/50 border-2 focus-visible:ring-primary/20 text-base sm:text-lg"
                   />
                 </div>
                 <Button 
                   disabled={isStarting}
-                  className="w-full h-16 rounded-[1.5rem] font-black uppercase text-sm tracking-[0.2em] shadow-lg shadow-primary/25"
+                    className="w-full h-14 sm:h-16 rounded-[1.5rem] font-black uppercase text-xs sm:text-sm tracking-[0.2em] shadow-lg shadow-primary/25"
                 >
                   {isStarting ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Start Quiz Now'}
                 </Button>
@@ -337,15 +337,15 @@ export default function QuizPlayer() {
   };
 
   return (
-    <div className="min-h-screen bg-secondary/10 flex flex-col pt-20">
+    <div className="min-h-screen bg-secondary/10 flex flex-col pt-16 sm:pt-20">
       {/* Header Bar */}
-      <header className="fixed top-0 left-0 right-0 h-20 bg-background/80 backdrop-blur-xl border-b border-border/50 z-50 px-6 flex items-center justify-between">
-        <div className="flex items-center gap-4">
+      <header className="fixed top-0 left-0 right-0 h-16 sm:h-20 bg-background/80 backdrop-blur-xl border-b border-border/50 z-50 px-3 sm:px-6 flex items-center justify-between gap-3">
+        <div className="flex items-center gap-2 sm:gap-4 min-w-0">
           <div className="p-2 bg-primary/10 rounded-xl">
             < ShieldAlert className="h-5 w-5 text-primary" />
           </div>
           <div>
-            <h1 className="font-bold text-sm md:text-base">{quiz.title}</h1>
+            <h1 className="font-bold text-xs sm:text-sm md:text-base truncate max-w-[46vw] sm:max-w-none">{quiz.title}</h1>
             <div className="flex items-center gap-3 mt-0.5">
               <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Session Secured</span>
               <div className="h-1 w-1 bg-green-500 rounded-full animate-pulse" />
@@ -353,10 +353,10 @@ export default function QuizPlayer() {
           </div>
         </div>
 
-        <div className="flex items-center gap-6">
-          <div className={`flex items-center gap-2 px-4 py-2 rounded-xl border-2 transition-colors ${timeLeft && timeLeft < 300 ? 'border-red-200 bg-red-50 text-red-600 animate-pulse' : 'border-border bg-background'}`}>
+        <div className="flex items-center gap-2 sm:gap-6 shrink-0">
+          <div className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1.5 sm:py-2 rounded-xl border-2 transition-colors ${timeLeft && timeLeft < 300 ? 'border-red-200 bg-red-50 text-red-600 animate-pulse' : 'border-border bg-background'}`}>
             <Clock className="h-4 w-4" />
-            <span className="text-lg font-bold font-mono">{timeLeft !== null ? formatTime(timeLeft) : '--:--'}</span>
+            <span className="text-sm sm:text-lg font-bold font-mono">{timeLeft !== null ? formatTime(timeLeft) : '--:--'}</span>
           </div>
           {violations > 0 && (
             <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-orange-100 text-orange-700 border border-orange-200">
@@ -367,7 +367,7 @@ export default function QuizPlayer() {
         </div>
       </header>
 
-      <main className="flex-1 w-full max-w-4xl mx-auto px-6 py-12">
+      <main className="flex-1 w-full max-w-4xl mx-auto px-3 sm:px-6 py-6 sm:py-12">
         <div className="space-y-8">
           {/* Progress */}
           <div className="space-y-2">
@@ -386,8 +386,8 @@ export default function QuizPlayer() {
             exit={{ opacity: 0, x: -20 }}
             transition={{ duration: 0.3 }}
           >
-            <Card className={`border-none shadow-xl shadow-primary/5 rounded-3xl overflow-hidden ${currentQuestion.type === 'SECTION_BREAK' ? 'bg-primary text-white' : ''}`}>
-              <CardHeader className="p-8 pb-4">
+            <Card className={`border-none shadow-xl shadow-primary/5 rounded-2xl sm:rounded-3xl overflow-hidden ${currentQuestion.type === 'SECTION_BREAK' ? 'bg-primary text-white' : ''}`}>
+              <CardHeader className="p-4 sm:p-8 pb-3 sm:pb-4">
                 <div className="flex items-center gap-2 mb-4">
                   {currentQuestion.type !== 'SECTION_BREAK' && (
                     <span className="px-2 py-0.5 bg-primary/10 text-primary text-[10px] font-bold rounded uppercase">
@@ -400,14 +400,14 @@ export default function QuizPlayer() {
                     </span>
                   )}
                 </div>
-                <CardTitle className={`text-2xl md:text-3xl font-extrabold leading-tight ${currentQuestion.type === 'SECTION_BREAK' ? 'md:text-4xl' : ''}`}>
+                <CardTitle className={`text-xl sm:text-2xl md:text-3xl font-extrabold leading-tight ${currentQuestion.type === 'SECTION_BREAK' ? 'md:text-4xl' : ''}`}>
                   {currentQuestion.text}
                 </CardTitle>
                 {currentQuestion.description && (
-                  <p className={`mt-4 text-lg ${currentQuestion.type === 'SECTION_BREAK' ? 'text-primary-foreground/80' : 'text-muted-foreground'}`}>{currentQuestion.description}</p>
+                  <p className={`mt-3 sm:mt-4 text-base sm:text-lg ${currentQuestion.type === 'SECTION_BREAK' ? 'text-primary-foreground/80' : 'text-muted-foreground'}`}>{currentQuestion.description}</p>
                 )}
               </CardHeader>
-              <CardContent className="p-8 pt-6">
+              <CardContent className="p-4 sm:p-8 pt-4 sm:pt-6">
                 {currentQuestion.type === 'MCQ' && (
                   <RadioGroup 
                     value={answers[currentQuestion.id] || ''} 
@@ -423,7 +423,7 @@ export default function QuizPlayer() {
                         <div className={`h-6 w-6 rounded-full border-2 flex items-center justify-center transition-colors ${answers[currentQuestion.id] === opt ? 'border-primary' : 'border-border'}`}>
                           {answers[currentQuestion.id] === opt && <div className="h-3 w-3 rounded-full bg-primary" />}
                         </div>
-                        <span className="text-lg font-medium">{opt}</span>
+                        <span className="text-base sm:text-lg font-medium break-words">{opt}</span>
                       </Label>
                     )) : null}
                   </RadioGroup>
@@ -444,7 +444,7 @@ export default function QuizPlayer() {
                             setAnswers({ ...answers, [currentQuestion.id]: next });
                           }}
                         />
-                        <span className="text-lg font-medium">{opt}</span>
+                        <span className="text-base sm:text-lg font-medium break-words">{opt}</span>
                       </Label>
                     )) : null}
                   </div>
@@ -476,7 +476,7 @@ export default function QuizPlayer() {
                 )}
 
                 {currentQuestion.type === 'RATING' && (
-                  <div className="flex items-center gap-4 justify-center py-8">
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-4 justify-center py-4 sm:py-8">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <button
                         key={star}
@@ -530,22 +530,22 @@ export default function QuizPlayer() {
                   variant="ghost" 
                   disabled={currentQuestionIndex === 0} 
                   onClick={() => setCurrentQuestionIndex(prev => prev - 1)}
-                  className="h-12 px-6 rounded-xl hover:bg-background"
+                  className="h-11 sm:h-12 px-4 sm:px-6 rounded-xl hover:bg-background"
                 >
                   <ChevronLeft className="mr-2 h-4 w-4" /> Previous
                 </Button>
                 
                 {currentQuestionIndex === (quiz?.questions?.length || 0) - 1 ? (
-                  <Button 
-                    className="h-12 px-8 rounded-xl shadow-lg shadow-primary/20" 
+                    <Button 
+                      className="h-12 px-8 rounded-xl shadow-lg shadow-primary/20" 
                     onClick={() => handleSubmit()}
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <><Send className="mr-2 h-4 w-4" /> Finish Exam</>}
                   </Button>
                 ) : (
-                  <Button 
-                    className="h-12 px-8 rounded-xl shadow-lg shadow-primary/20" 
+                    <Button 
+                      className="h-12 px-8 rounded-xl shadow-lg shadow-primary/20" 
                     onClick={() => setCurrentQuestionIndex(prev => prev + 1)}
                   >
                     Next Question <ChevronRight className="ml-2 h-4 w-4" />
@@ -557,7 +557,7 @@ export default function QuizPlayer() {
         </div>
       </main>
 
-      <div className="fixed bottom-6 right-6 z-50">
+      <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50">
         <div className="bg-background/80 backdrop-blur-md px-4 py-2 rounded-full border border-border shadow-xl flex items-center gap-3">
           <div className="h-2 w-2 bg-green-500 rounded-full" />
           <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground leading-none">Auto-Syncing</span>

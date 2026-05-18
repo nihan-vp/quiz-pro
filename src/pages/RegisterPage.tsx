@@ -37,7 +37,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-secondary/20 p-6">
+    <div className="min-h-screen flex items-start sm:items-center justify-center bg-secondary/20 p-4 sm:p-6 py-8 sm:py-6">
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -45,7 +45,7 @@ export default function RegisterPage() {
         className="w-full max-w-md"
       >
         <div className="flex justify-center mb-8">
-          <Link to="/" className="flex items-center gap-2 font-bold text-2xl tracking-tight">
+          <Link to="/" className="flex items-center gap-2 font-bold text-xl sm:text-2xl tracking-tight">
             <div className="p-1.5 bg-primary rounded-xl shadow-lg shadow-primary/20">
               <ClipboardList className="text-primary-foreground h-6 w-6" />
             </div>

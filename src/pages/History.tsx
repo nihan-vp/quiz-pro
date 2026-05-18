@@ -39,17 +39,17 @@ export default function History() {
 
   return (
     <DashboardLayout>
-      <div className="max-w-5xl mx-auto space-y-10 pb-20">
+      <div className="max-w-5xl mx-auto space-y-8 sm:space-y-10 pb-16 sm:pb-20">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
-            <h1 className="text-4xl font-black tracking-tight uppercase flex items-center gap-3">
+            <h1 className="text-2xl sm:text-4xl font-black tracking-tight uppercase flex items-center gap-2 sm:gap-3">
               <HistoryIcon className="h-8 w-8 text-primary" />
               My History
             </h1>
             <p className="text-muted-foreground font-medium mt-1">Review your past performance and assessment results</p>
           </div>
           
-          <div className="flex items-center gap-2 p-1 bg-muted/30 rounded-2xl border-2 border-dashed">
+          <div className="flex items-center gap-2 p-1 bg-muted/30 rounded-2xl border-2 border-dashed self-start md:self-auto">
             <div className="px-4 py-2 bg-background rounded-xl shadow-sm border flex items-center gap-2">
               <CheckCircle2 className="h-4 w-4 text-green-500" />
               <span className="text-xs font-black uppercase tracking-widest">{attempts.length} Attempts</span>
@@ -64,7 +64,7 @@ export default function History() {
             ))}
           </div>
         ) : attempts.length === 0 ? (
-          <div className="flex flex-col items-center justify-center p-20 text-center space-y-6 bg-muted/20 rounded-[3rem] border-4 border-dashed border-muted">
+          <div className="flex flex-col items-center justify-center p-8 sm:p-20 text-center space-y-6 bg-muted/20 rounded-[2rem] sm:rounded-[3rem] border-4 border-dashed border-muted">
             <div className="h-20 w-20 rounded-full bg-muted flex items-center justify-center">
               <Layout className="h-10 w-10 text-muted-foreground/40" />
             </div>
@@ -117,7 +117,7 @@ export default function History() {
                           </div>
                         </div>
 
-                        <div className="flex items-center gap-8 text-center md:text-right shrink-0">
+                        <div className="flex flex-wrap items-center justify-center md:justify-end gap-5 md:gap-8 text-center md:text-right shrink-0">
                           <div className="space-y-1">
                             <p className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em]">Result Status</p>
                             <p className={`text-lg font-black uppercase ${!isReviewed ? 'text-orange-500' : (isPassed ? 'text-green-600' : 'text-red-600')}`}>
@@ -125,7 +125,7 @@ export default function History() {
                             </p>
                           </div>
 
-                          <div className="space-y-1 min-w-[80px]">
+                          <div className="space-y-1 min-w-[64px] sm:min-w-[80px]">
                             <p className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em]">Final Score</p>
                             <p className="text-2xl font-black tracking-tighter">
                               {isReviewed ? `${attempt.score}%` : '---'}

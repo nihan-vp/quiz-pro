@@ -110,9 +110,9 @@ export default function Dashboard() {
     <DashboardLayout>
       <div className="space-y-8 max-w-7xl mx-auto">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-6">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight mb-2">Welcome back, {user?.name}</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-2 break-words">Welcome back, {user?.name}</h1>
             <p className="text-muted-foreground">
               {user?.role === 'CREATOR' 
                 ? "Here's what's happening with your quizzes." 
@@ -185,7 +185,7 @@ export default function Dashboard() {
         {/* Content Section */}
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
           <div className="xl:col-span-2 space-y-6">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between gap-3">
               <h2 className="text-xl font-bold">
                 {user?.role === 'CREATOR' ? 'Your Recent Quizzes' : 'Recent Activity'}
               </h2>
@@ -214,32 +214,32 @@ export default function Dashboard() {
                     </Link>
                   </div>
                 ) : quizzes.map((quiz) => (
-                  <Card key={quiz.id} className="overflow-hidden border-none shadow-sm hover:shadow-md transition-all group">
-                    <CardHeader className="flex flex-row items-start justify-between p-6 pb-2">
-                      <div className="space-y-1">
+                    <Card key={quiz.id} className="overflow-hidden border-none shadow-sm hover:shadow-md transition-all group">
+                      <CardHeader className="flex flex-row items-start justify-between p-6 pb-2">
+                      <div className="space-y-1 min-w-0">
                         <Link to={`/forms/${quiz.id}/edit`} className="text-lg font-bold hover:text-primary transition-colors block">
                           {quiz.title}
                         </Link>
-                        <div className="flex items-center gap-2">
-                          <CardDescription>{quiz._count?.questions || 0} Questions • Created {format(new Date(quiz.createdAt), 'MMM d, yyyy')}</CardDescription>
+                        <div className="flex flex-wrap items-center gap-2">
+                          <CardDescription className="break-words">{quiz._count?.questions || 0} Questions • Created {format(new Date(quiz.createdAt), 'MMM d, yyyy')}</CardDescription>
                           <span className="text-[10px] font-black bg-muted px-2 py-0.5 rounded uppercase tracking-tighter">Code: {quiz.shareLink}</span>
                         </div>
                       </div>
-                      <div className="flex items-center gap-1">
-                        <Button variant="ghost" size="icon" className="h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity" title="Copy Direct Link" onClick={() => handleCopyLink(quiz.id)}>
+                      <div className="flex items-center gap-1 shrink-0">
+                        <Button variant="ghost" size="icon" className="h-8 w-8 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity" title="Copy Direct Link" onClick={() => handleCopyLink(quiz.id)}>
                           <Share2 className="h-4 w-4" />
                         </Button>
-                        <Button variant="ghost" size="icon" className="h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity" title="Copy Quiz Code" onClick={() => handleCopyCode(quiz.shareLink)}>
+                        <Button variant="ghost" size="icon" className="h-8 w-8 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity" title="Copy Quiz Code" onClick={() => handleCopyCode(quiz.shareLink)}>
                           <Copy className="h-4 w-4" />
                         </Button>
-                        <Button variant="ghost" size="icon" className="h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity text-destructive" onClick={() => handleDelete(quiz.id)}>
+                        <Button variant="ghost" size="icon" className="h-8 w-8 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity text-destructive" onClick={() => handleDelete(quiz.id)}>
                           <Trash2 className="h-4 w-4" />
                         </Button>
                       </div>
                     </CardHeader>
                     <CardContent className="p-6 pt-2">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-4">
+                      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                        <div className="flex items-center gap-4 flex-wrap">
                           <div className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${quiz.isPublished ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>
                             {quiz.isPublished ? 'Published' : 'Draft'}
                           </div>
@@ -249,7 +249,7 @@ export default function Dashboard() {
                             </div>
                           )}
                         </div>
-                        <div className="flex items-center gap-2">
+                        <div className="flex flex-wrap items-center gap-2">
                           <Link to={`/forms/${quiz.id}/reports`}>
                             <Button size="sm" variant="ghost" className="h-8 text-[10px] font-black uppercase tracking-widest hover:bg-primary/5 hover:text-primary px-3">
                               <BarChart className="mr-1.5 h-3 w-3" /> Reports
@@ -319,7 +319,7 @@ export default function Dashboard() {
                   <div className="space-y-4">
                     <div className="space-y-2">
                       <h3 className="text-sm font-semibold">Join a Quiz</h3>
-                      <div className="flex gap-2">
+                      <div className="flex flex-col sm:flex-row gap-2">
                         <Input 
                           placeholder="Enter Quiz Code" 
                           className="bg-secondary/20 h-10" 

@@ -187,32 +187,32 @@ export default function QuizBuilder() {
     <DashboardLayout>
       <div className="max-w-6xl mx-auto space-y-6">
         {/* Header Actions */}
-        <div className="flex items-center justify-between sticky top-0 bg-background z-10 py-4 border-b border-border/50">
-          <div className="flex items-center gap-4">
-            <h1 className="text-xl font-bold truncate max-w-[200px] md:max-w-md">{title}</h1>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between sticky top-0 bg-background z-10 py-3 sm:py-4 border-b border-border/50 gap-3">
+          <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+            <h1 className="text-base sm:text-xl font-bold truncate max-w-[45vw] sm:max-w-[200px] md:max-w-md">{title}</h1>
             <div className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${isSaving ? 'bg-secondary animate-pulse' : (published ? 'bg-green-100 text-green-700' : 'bg-primary/10 text-primary')}`}>
               {isSaving ? 'Saving...' : (published ? 'Published' : 'Draft')}
             </div>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
             <Button variant="ghost" size="sm" onClick={handlePreview} className="hidden sm:flex">
               <Eye className="mr-2 h-4 w-4" /> Preview
             </Button>
-            <Button variant="outline" size="sm" onClick={() => handleSave(false)} disabled={isSaving}>
+            <Button variant="outline" size="sm" onClick={() => handleSave(false)} disabled={isSaving} className="flex-1 sm:flex-none">
               <Save className="mr-2 h-4 w-4" /> Save
             </Button>
-            <Button size="sm" onClick={() => handleSave(true)} disabled={isSaving} className="shadow-lg shadow-primary/20">
+            <Button size="sm" onClick={() => handleSave(true)} disabled={isSaving} className="shadow-lg shadow-primary/20 flex-1 sm:flex-none">
               Publish
             </Button>
           </div>
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <div className="flex justify-center mb-8">
-            <TabsList className="bg-secondary/30 p-1 rounded-xl h-11">
-              <TabsTrigger value="questions" className="rounded-lg px-6 h-9 transition-all data-[state=active]:shadow-sm">Questions</TabsTrigger>
-              <TabsTrigger value="settings" className="rounded-lg px-6 h-9 transition-all data-[state=active]:shadow-sm">Settings</TabsTrigger>
-              <TabsTrigger value="anticheat" className="rounded-lg px-6 h-9 transition-all data-[state=active]:shadow-sm flex items-center gap-2">
+            <div className="flex justify-center mb-6 sm:mb-8 overflow-x-auto">
+             <TabsList className="bg-secondary/30 p-1 rounded-xl h-11 min-w-max">
+               <TabsTrigger value="questions" className="rounded-lg px-4 sm:px-6 h-9 transition-all data-[state=active]:shadow-sm">Questions</TabsTrigger>
+               <TabsTrigger value="settings" className="rounded-lg px-4 sm:px-6 h-9 transition-all data-[state=active]:shadow-sm">Settings</TabsTrigger>
+               <TabsTrigger value="anticheat" className="rounded-lg px-4 sm:px-6 h-9 transition-all data-[state=active]:shadow-sm flex items-center gap-2">
                 <ShieldAlert className="h-4 w-4" /> Anti-Cheat
               </TabsTrigger>
             </TabsList>
@@ -220,18 +220,18 @@ export default function QuizBuilder() {
 
           <TabsContent value="questions" className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
             {/* Title Card */}
-            <Card className="border-t-8 border-t-primary shadow-xl shadow-primary/5 rounded-2xl border-x-none border-b-none md:border md:border-t-8">
-              <CardContent className="pt-8 pb-10 px-6 md:px-10 space-y-6">
+                  <Card className="border-t-8 border-t-primary shadow-xl shadow-primary/5 rounded-2xl border-x-none border-b-none md:border md:border-t-8">
+              <CardContent className="pt-6 sm:pt-8 pb-8 sm:pb-10 px-4 sm:px-6 md:px-10 space-y-4 sm:space-y-6">
                 <Input 
                   value={title} 
                   onChange={(e) => setTitle(e.target.value)} 
-                  className="text-4xl font-extrabold border-none shadow-none focus-visible:ring-0 p-0 h-auto placeholder:opacity-20"
+                  className="text-2xl sm:text-4xl font-extrabold border-none shadow-none focus-visible:ring-0 p-0 h-auto placeholder:opacity-20"
                   placeholder="Quiz Title"
                 />
                 <Input 
                   value={description} 
                   onChange={(e) => setDescription(e.target.value)} 
-                  className="text-lg text-muted-foreground border-none shadow-none focus-visible:ring-0 p-0 h-auto placeholder:opacity-20"
+                  className="text-base sm:text-lg text-muted-foreground border-none shadow-none focus-visible:ring-0 p-0 h-auto placeholder:opacity-20"
                   placeholder="Quiz description (optional)"
                 />
               </CardContent>
@@ -262,7 +262,7 @@ export default function QuizBuilder() {
                           <CardContent className="p-6 md:p-8 space-y-6">
                             <div className="flex items-start gap-4 flex-col md:flex-row">
                               <div className="flex-1 space-y-4 w-full">
-                                <div className="flex gap-4">
+                                 <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                                   <Input 
                                     value={q.text} 
                                     onChange={(e) => updateQuestion(q.id, { text: e.target.value })} 
@@ -273,7 +273,7 @@ export default function QuizBuilder() {
                                     value={q.type} 
                                     onValueChange={(val) => updateQuestion(q.id, { type: val })}
                                   >
-                                    <SelectTrigger className="w-[180px] bg-secondary/20 h-12">
+                                     <SelectTrigger className="w-full sm:w-[180px] bg-secondary/20 h-12">
                                       <SelectValue />
                                     </SelectTrigger>
                                     <SelectContent>
@@ -373,9 +373,9 @@ export default function QuizBuilder() {
                               </div>
                             </div>
                           </CardContent>
-                          <CardFooter className="bg-secondary/10 px-6 py-3 flex items-center justify-between">
+                          <CardFooter className="bg-secondary/10 px-4 sm:px-6 py-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                             {q.type !== 'SECTION_BREAK' ? (
-                              <div className="flex items-center gap-6">
+                               <div className="flex flex-wrap items-center gap-4 sm:gap-6">
                                 <div className="flex items-center gap-2">
                                   <Label className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Marks</Label>
                                   <Input 
@@ -414,7 +414,7 @@ export default function QuizBuilder() {
 
               {/* Sidebar */}
               <div className="lg:block">
-                <Card className="sticky top-28 bg-card border-none shadow-xl shadow-primary/5 rounded-2xl overflow-hidden">
+                <Card className="lg:sticky lg:top-28 bg-card border-none shadow-xl shadow-primary/5 rounded-2xl overflow-hidden">
                   <div className="p-4 bg-primary/5 text-primary text-xs font-bold uppercase tracking-widest">Question Types</div>
                   <div className="p-2 grid grid-cols-2 lg:grid-cols-1 gap-1">
                     {QUESTION_TYPES.map((qt) => (
@@ -441,8 +441,8 @@ export default function QuizBuilder() {
                   <Settings className="h-5 w-5 text-primary" /> General Quiz Settings
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-8 p-8">
-                <div className="flex items-center justify-between p-4 bg-secondary/20 rounded-2xl group transition-all hover:bg-secondary/30">
+              <CardContent className="space-y-6 sm:space-y-8 p-4 sm:p-8">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-4 bg-secondary/20 rounded-2xl group transition-all hover:bg-secondary/30">
                   <div className="space-y-1">
                     <Label className="text-base font-bold">Quiz Mode</Label>
                     <p className="text-sm text-muted-foreground">Enable scoring, correct answers, and feedback.</p>
@@ -513,7 +513,7 @@ export default function QuizBuilder() {
                   <ShieldAlert className="h-5 w-5" /> Anti-Cheat System
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-6 p-8">
+              <CardContent className="space-y-6 p-4 sm:p-8">
                 <div className="p-4 bg-red-50 rounded-2xl border border-red-100 mb-8 flex items-start gap-4">
                   <div className="p-2 bg-red-100 rounded-lg text-red-600">
                     <Settings className="h-5 w-5" />
@@ -531,7 +531,7 @@ export default function QuizBuilder() {
                     { label: 'Force Fullscreen', key: 'fullscreenRequired', desc: 'Requires users to stay in fullscreen mode during the exam' },
                     { label: 'Auto-Submit on Violations', key: 'autoSubmitOnMaxViolations', desc: 'Automatically finishes the exam after maximum violations' },
                   ].map((setting) => (
-                    <div key={setting.key} className="flex items-center justify-between p-4 bg-secondary/10 rounded-xl hover:bg-secondary/20 transition-colors">
+                    <div key={setting.key} className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-4 bg-secondary/10 rounded-xl hover:bg-secondary/20 transition-colors">
                       <div className="space-y-1">
                         <Label className="text-sm font-bold uppercase tracking-wider">{setting.label}</Label>
                         <p className="text-xs text-muted-foreground">{setting.desc}</p>
