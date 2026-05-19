@@ -226,13 +226,13 @@ export default function Dashboard() {
                         </div>
                       </div>
                       <div className="flex items-center gap-1 shrink-0">
-                        <Button variant="ghost" size="icon" className="h-8 w-8 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity" title="Copy Direct Link" onClick={() => handleCopyLink(quiz.id)}>
+                        <Button variant="ghost" size="icon" className="h-8 w-8" title="Copy Direct Link" onClick={() => handleCopyLink(quiz.id)}>
                           <Share2 className="h-4 w-4" />
                         </Button>
-                        <Button variant="ghost" size="icon" className="h-8 w-8 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity" title="Copy Quiz Code" onClick={() => handleCopyCode(quiz.shareLink)}>
+                        <Button variant="ghost" size="icon" className="h-8 w-8" title="Copy Quiz Code" onClick={() => handleCopyCode(quiz.shareLink)}>
                           <Copy className="h-4 w-4" />
                         </Button>
-                        <Button variant="ghost" size="icon" className="h-8 w-8 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity text-destructive" onClick={() => handleDelete(quiz.id)}>
+                        <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive" onClick={() => handleDelete(quiz.id)}>
                           <Trash2 className="h-4 w-4" />
                         </Button>
                       </div>
