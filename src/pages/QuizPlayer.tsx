@@ -243,6 +243,7 @@ export default function QuizPlayer() {
                   />
                 </div>
                 <Button 
+                  type="submit"
                   disabled={isStarting}
                   className="w-full h-14 sm:h-16 rounded-[1.5rem] font-black uppercase text-xs sm:text-sm tracking-[0.2em] shadow-lg shadow-primary/25"
                 >
@@ -324,6 +325,17 @@ export default function QuizPlayer() {
     const s = seconds % 60;
     return `${m}:${s.toString().padStart(2, '0')}`;
   };
+
+  if (!quiz || !attemptId) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="flex flex-col items-center gap-4">
+          <Loader2 className="h-10 w-10 animate-spin text-primary" />
+          <p className="text-muted-foreground animate-pulse font-medium">Loading quiz...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-secondary/10 flex flex-col pt-16 sm:pt-20">
