@@ -45,7 +45,6 @@ export default function QuizPlayer() {
   const [attemptId, setAttemptId] = useState<string | null>(null);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [requiresGuestInfo, setRequiresGuestInfo] = useState(false);
-  const [guestInfo, setGuestInfo] = useState({ name: '', email: '' });
   const [isStarting, setIsStarting] = useState(false);
   const socketRef = useRef<any>(null);
 
@@ -74,45 +73,17 @@ export default function QuizPlayer() {
         quizId: id, 
         attemptId, 
         type, 
-        userName: user?.name || guestInfo.name || 'Anonymous',
+        userName: user?.name || 'Anonymous',
         timestamp: new Date().toISOString()
       });
     }
   };
 
-  const handleStartAsAnonymous = async () => {
+  const handleStartAnonymous = async () => {
     setIsStarting(true);
     try {
       const res = await api.post(`/forms/${id}/start`, { 
         guestName: `Guest ${Math.floor(Math.random() * 10000)}`
-      });
-      setAttemptId(res.data.id);
-      setRequiresGuestInfo(false);
-      
-      // Initialize timer if exists in quiz settings
-      try {
-        const s = quiz?.settings ? JSON.parse(quiz.settings) : {};
-        if (s.timer) setTimeLeft(s.timer * 60);
-      } catch (e) {}
-
-      toast.success('Quiz started!');
-    } catch (error: any) {
-      toast.error('Failed to start quiz');
-    } finally {
-      setIsStarting(false);
-    }
-  };
-
-  const handleStartGuest = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!guestInfo.name) {
-      return toast.error('Please provide your name');
-    }
-    
-    setIsStarting(true);
-    try {
-      const res = await api.post(`/forms/${id}/start`, { 
-        guestName: guestInfo.name
       });
       setAttemptId(res.data.id);
       setRequiresGuestInfo(false);
@@ -253,42 +224,24 @@ export default function QuizPlayer() {
               <p className="text-muted-foreground mt-2 font-medium">Please enter your name to start the quiz</p>
             </CardHeader>
             <CardContent className="p-6 sm:p-10 pt-3 sm:pt-4">
-              <div className="space-y-4">
-                <form onSubmit={handleStartGuest} className="space-y-6">
-                  <div className="space-y-2">
-                    <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-1">Full Name (Optional)</Label>
-                    <Input 
-                      value={guestInfo.name}
-                      onChange={(e) => setGuestInfo({ ...guestInfo, name: e.target.value })}
-                      placeholder="John Doe"
-                      className="h-12 sm:h-14 rounded-2xl bg-muted/50 border-2 focus-visible:ring-primary/20 text-base sm:text-lg"
-                    />
-                  </div>
-                  <Button 
-                    disabled={isStarting}
-                      className="w-full h-14 sm:h-16 rounded-[1.5rem] font-black uppercase text-xs sm:text-sm tracking-[0.2em] shadow-lg shadow-primary/25"
-                  >
-                    {isStarting ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Start Quiz with Name'}
-                  </Button>
-                </form>
-                <div className="relative">
-                  <div className="absolute inset-0 flex items-center">
-                    <span className="w-full border-t border-border/30" />
-                  </div>
-                  <div className="relative flex justify-center text-xs uppercase">
-                    <span className="px-2 bg-background text-muted-foreground font-semibold">or</span>
-                  </div>
+              <form onSubmit={handleStartGuest} className="space-y-6">
+                <div className="space-y-2">
+                  <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-1">Full Name</Label>
+                  <Input 
+                    required
+                    value={guestInfo.name}
+                    onChange={(e) => setGuestInfo({ ...guestInfo, name: e.target.value })}
+                    placeholder="John Doe"
+                    className="h-12 sm:h-14 rounded-2xl bg-muted/50 border-2 focus-visible:ring-primary/20 text-base sm:text-lg"
+                  />
                 </div>
                 <Button 
-                  type="button"
                   disabled={isStarting}
-                  variant="outline"
-                  onClick={handleStartAsAnonymous}
-                  className="w-full h-14 sm:h-16 rounded-[1.5rem] font-black uppercase text-xs sm:text-sm tracking-[0.2em]"
+                  className="w-full h-14 sm:h-16 rounded-[1.5rem] font-black uppercase text-xs sm:text-sm tracking-[0.2em] shadow-lg shadow-primary/25"
                 >
-                  {isStarting ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Start as Guest'}
+                  {isStarting ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Start Quiz'}
                 </Button>
-              </div>
+              </form>
             </CardContent>
           </Card>
         </motion.div>
@@ -452,7 +405,7 @@ export default function QuizPlayer() {
                         <div className={`h-6 w-6 rounded-full border-2 flex items-center justify-center transition-colors ${answers[currentQuestion.id] === opt ? 'border-primary' : 'border-border'}`}>
                           {answers[currentQuestion.id] === opt && <div className="h-3 w-3 rounded-full bg-primary" />}
                         </div>
-                        <span className="text-base sm:text-lg font-medium break-words">{opt}</span>
+                        <span className="text-base sm:text-lg font-medium wrap-break-word">{opt}</span>
                       </Label>
                     )) : null}
                   </RadioGroup>
@@ -473,7 +426,7 @@ export default function QuizPlayer() {
                             setAnswers({ ...answers, [currentQuestion.id]: next });
                           }}
                         />
-                        <span className="text-base sm:text-lg font-medium break-words">{opt}</span>
+                        <span className="text-base sm:text-lg font-medium wrap-break-word">{opt}</span>
                       </Label>
                     )) : null}
                   </div>
