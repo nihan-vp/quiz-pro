@@ -69,6 +69,7 @@ export default function App() {
           } />
           
           <Route path="/quiz/:id" element={<QuizPlayer />} />
+          <Route path="/quiz/:id/join" element={<QuizPlayer />} />
           <Route path="/quiz/:id/result" element={<QuizResult />} />
           <Route path="/quiz/:id/result/:attemptId" element={<QuizResult />} />
 

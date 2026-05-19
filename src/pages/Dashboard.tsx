@@ -100,7 +100,7 @@ export default function Dashboard() {
     if (!joinCode) return;
     try {
       const res = await api.get(`/forms/code/${joinCode}`);
-      navigate(`/quiz/${res.data.id}/join`);
+      navigate(`/quiz/${res.data.id}`);
     } catch (error: any) {
       toast.error(error.response?.data?.message || 'Invalid quiz code');
     }
@@ -112,7 +112,7 @@ export default function Dashboard() {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 md:gap-6">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-2 break-words">Welcome back, {user?.name}</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-2 wrap-break-word">Welcome back, {user?.name}</h1>
             <p className="text-muted-foreground">
               {user?.role === 'CREATOR' 
                 ? "Here's what's happening with your quizzes." 
@@ -221,7 +221,7 @@ export default function Dashboard() {
                           {quiz.title}
                         </Link>
                         <div className="flex flex-wrap items-center gap-2">
-                          <CardDescription className="break-words">{quiz._count?.questions || 0} Questions • Created {format(new Date(quiz.createdAt), 'MMM d, yyyy')}</CardDescription>
+                          <CardDescription className="wrap-break-word">{quiz._count?.questions || 0} Questions • Created {format(new Date(quiz.createdAt), 'MMM d, yyyy')}</CardDescription>
                           <span className="text-[10px] font-black bg-muted px-2 py-0.5 rounded uppercase tracking-tighter">Code: {quiz.shareLink}</span>
                         </div>
                       </div>
