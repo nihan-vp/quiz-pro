@@ -80,17 +80,39 @@ export default function QuizPlayer() {
     }
   };
 
+  const handleStartAsAnonymous = async () => {
+    setIsStarting(true);
+    try {
+      const res = await api.post(`/forms/${id}/start`, { 
+        guestName: `Guest ${Math.floor(Math.random() * 10000)}`
+      });
+      setAttemptId(res.data.id);
+      setRequiresGuestInfo(false);
+      
+      // Initialize timer if exists in quiz settings
+      try {
+        const s = quiz?.settings ? JSON.parse(quiz.settings) : {};
+        if (s.timer) setTimeLeft(s.timer * 60);
+      } catch (e) {}
+
+      toast.success('Quiz started!');
+    } catch (error: any) {
+      toast.error('Failed to start quiz');
+    } finally {
+      setIsStarting(false);
+    }
+  };
+
   const handleStartGuest = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!guestInfo.name || !guestInfo.email) {
-      return toast.error('Please provide your name and email');
+    if (!guestInfo.name) {
+      return toast.error('Please provide your name');
     }
     
     setIsStarting(true);
     try {
       const res = await api.post(`/forms/${id}/start`, { 
-        guestName: guestInfo.name, 
-        guestEmail: guestInfo.email 
+        guestName: guestInfo.name
       });
       setAttemptId(res.data.id);
       setRequiresGuestInfo(false);
@@ -228,38 +250,45 @@ export default function QuizPlayer() {
                 <Send className="h-8 w-8 text-primary" />
               </div>
               <CardTitle className="text-2xl sm:text-3xl font-black uppercase tracking-tight">Welcome!</CardTitle>
-              <p className="text-muted-foreground mt-2 font-medium">Please enter your details to start the quiz</p>
+              <p className="text-muted-foreground mt-2 font-medium">Please enter your name to start the quiz</p>
             </CardHeader>
             <CardContent className="p-6 sm:p-10 pt-3 sm:pt-4">
-              <form onSubmit={handleStartGuest} className="space-y-6">
-                <div className="space-y-2">
-                  <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-1">Full Name</Label>
-                  <Input 
-                    required
-                    value={guestInfo.name}
-                    onChange={(e) => setGuestInfo({ ...guestInfo, name: e.target.value })}
-                    placeholder="John Doe"
-                    className="h-12 sm:h-14 rounded-2xl bg-muted/50 border-2 focus-visible:ring-primary/20 text-base sm:text-lg"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-1">Email Address</Label>
-                  <Input 
-                    required
-                    type="email"
-                    value={guestInfo.email}
-                    onChange={(e) => setGuestInfo({ ...guestInfo, email: e.target.value })}
-                    placeholder="john@example.com"
-                    className="h-12 sm:h-14 rounded-2xl bg-muted/50 border-2 focus-visible:ring-primary/20 text-base sm:text-lg"
-                  />
+              <div className="space-y-4">
+                <form onSubmit={handleStartGuest} className="space-y-6">
+                  <div className="space-y-2">
+                    <Label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-1">Full Name (Optional)</Label>
+                    <Input 
+                      value={guestInfo.name}
+                      onChange={(e) => setGuestInfo({ ...guestInfo, name: e.target.value })}
+                      placeholder="John Doe"
+                      className="h-12 sm:h-14 rounded-2xl bg-muted/50 border-2 focus-visible:ring-primary/20 text-base sm:text-lg"
+                    />
+                  </div>
+                  <Button 
+                    disabled={isStarting}
+                      className="w-full h-14 sm:h-16 rounded-[1.5rem] font-black uppercase text-xs sm:text-sm tracking-[0.2em] shadow-lg shadow-primary/25"
+                  >
+                    {isStarting ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Start Quiz with Name'}
+                  </Button>
+                </form>
+                <div className="relative">
+                  <div className="absolute inset-0 flex items-center">
+                    <span className="w-full border-t border-border/30" />
+                  </div>
+                  <div className="relative flex justify-center text-xs uppercase">
+                    <span className="px-2 bg-background text-muted-foreground font-semibold">or</span>
+                  </div>
                 </div>
                 <Button 
+                  type="button"
                   disabled={isStarting}
-                    className="w-full h-14 sm:h-16 rounded-[1.5rem] font-black uppercase text-xs sm:text-sm tracking-[0.2em] shadow-lg shadow-primary/25"
+                  variant="outline"
+                  onClick={handleStartAsAnonymous}
+                  className="w-full h-14 sm:h-16 rounded-[1.5rem] font-black uppercase text-xs sm:text-sm tracking-[0.2em]"
                 >
-                  {isStarting ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Start Quiz Now'}
+                  {isStarting ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Start as Guest'}
                 </Button>
-              </form>
+              </div>
             </CardContent>
           </Card>
         </motion.div>
