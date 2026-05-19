@@ -45,6 +45,7 @@ export default function QuizPlayer() {
   const [attemptId, setAttemptId] = useState<string | null>(null);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [requiresGuestInfo, setRequiresGuestInfo] = useState(false);
+  const [guestInfo, setGuestInfo] = useState({ name: '' });
   const [isStarting, setIsStarting] = useState(false);
   const socketRef = useRef<any>(null);
 
@@ -79,15 +80,21 @@ export default function QuizPlayer() {
     }
   };
 
-  const handleStartAnonymous = async () => {
+  const handleStartGuest = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!guestInfo.name.trim()) {
+      return toast.error('Please provide your name');
+    }
+
     setIsStarting(true);
     try {
-      const res = await api.post(`/forms/${id}/start`, { 
-        guestName: `Guest ${Math.floor(Math.random() * 10000)}`
+      const res = await api.post(`/forms/${id}/start`, {
+        guestName: guestInfo.name.trim(),
       });
       setAttemptId(res.data.id);
       setRequiresGuestInfo(false);
-      
+
       // Initialize timer if exists in quiz settings
       try {
         const s = quiz?.settings ? JSON.parse(quiz.settings) : {};
